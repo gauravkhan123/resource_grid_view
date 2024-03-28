@@ -135,7 +135,4 @@ if (class_exists('WP_Resources_Grid')) {
 
     $WP_Resources_Grid = new WP_Resources_Grid();
 }
-// add_action($tag, $function_to_add, $priority, $accepted_args);
-// settings_fields($option_group);
-// do_settings_sections($page);
-// add_settings_field($id, $title, $callback, $page, $section, $args)
+
