@@ -24,13 +24,14 @@ if (!class_exists('WP_Resources_Grid')) {
         function __construct()
         {
             $this->define_constants();
+            require_once( WP_RESOURCES_PATH . 'functions/functions.php' );
             add_action('admin_menu', array($this, 'add_menu'));
             require_once(WP_RESOURCES_PATH . 'post-types/class.wp-resources-cpt.php');
             $WP_Resources_Post_Type = new WP_Resources_Post_Type();
             require_once(WP_RESOURCES_PATH . 'class.setting-page.php');
             $resource_grid_Settings = new resource_grid_Settings();
             require_once(WP_RESOURCES_PATH . 'shortcodes/class.wp-resources-shortcode.php');
-            $resource_grid_Settings = new resource_grid_Settings();
+            $resource_grid_shortcode = new resource_grid_shortcode();
             add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 999);
             add_action('admin_enqueue_scripts', array($this, 'register_admin_scripts'));
         }
