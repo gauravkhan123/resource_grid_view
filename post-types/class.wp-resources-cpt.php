@@ -47,24 +47,24 @@ if (!class_exists('WP_Resources_Post_Type')) {
         function custom_taxonomy_categories()
         {
             register_taxonomy('wpcategories', ['wp_resources'], [
-                'label' => __('Categories', 'txtdomain'),
+                'label' => __('Categories', 'resources-grid-view'),
                 'hierarchical' => true,
                 'rewrite' => ['slug' => 'categories'],
                 'show_admin_column' => true,
                 'show_in_rest' => true,
                 'labels' => [
-                    'singular_name' => __('Categories', 'txtdomain'),
-                    'all_items' => __('All Categories', 'txtdomain'),
-                    'edit_item' => __('Edit Categories', 'txtdomain'),
-                    'view_item' => __('View Categories', 'txtdomain'),
-                    'update_item' => __('Update Categories', 'txtdomain'),
-                    'add_new_item' => __('Add New Categories', 'txtdomain'),
-                    'new_item_name' => __('New Categories Name', 'txtdomain'),
-                    'search_items' => __('Search Categories', 'txtdomain'),
-                    'popular_items' => __('Popular Categories', 'txtdomain'),
-                    'separate_items_with_commas' => __('Separate Categories with comma', 'txtdomain'),
-                    'choose_from_most_used' => __('Choose from most used Categories', 'txtdomain'),
-                    'not_found' => __('No Categories found', 'txtdomain'),
+                    'singular_name' => __('Categories', 'resources-grid-view'),
+                    'all_items' => __('All Categories', 'resources-grid-view'),
+                    'edit_item' => __('Edit Categories', 'resources-grid-view'),
+                    'view_item' => __('View Categories', 'resources-grid-view'),
+                    'update_item' => __('Update Categories', 'resources-grid-view'),
+                    'add_new_item' => __('Add New Categories', 'resources-grid-view'),
+                    'new_item_name' => __('New Categories Name', 'resources-grid-view'),
+                    'search_items' => __('Search Categories', 'resources-grid-view'),
+                    'popular_items' => __('Popular Categories', 'resources-grid-view'),
+                    'separate_items_with_commas' => __('Separate Categories with comma', 'resources-grid-view'),
+                    'choose_from_most_used' => __('Choose from most used Categories', 'resources-grid-view'),
+                    'not_found' => __('No Categories found', 'resources-grid-view'),
                 ]
             ]);
         }
@@ -87,45 +87,42 @@ if (!class_exists('WP_Resources_Post_Type')) {
 
         public function save_post($post_id)
         {
-            if( isset( $_POST['resource_grid_nonce'] ) ){
-                if( ! wp_verify_nonce( $_POST['resource_grid_nonce'], 'resource_grid_nonce' ) ){
+            if (isset($_POST['resource_grid_nonce'])) {
+                if (!wp_verify_nonce($_POST['resource_grid_nonce'], 'resource_grid_nonce')) {
                     return;
                 }
             }
 
-            if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
                 return;
             }
 
-            if( isset( $_POST['post_type'] ) && $_POST['post_type'] === 'mv-slider' ){
-                if( ! current_user_can( 'edit_page', $post_id ) ){
+            if (isset($_POST['post_type']) && $_POST['post_type'] === 'mv-slider') {
+                if (!current_user_can('edit_page', $post_id)) {
                     return;
-                }elseif( ! current_user_can( 'edit_post', $post_id ) ){
+                } elseif (!current_user_can('edit_post', $post_id)) {
                     return;
                 }
             }
 
-            if( isset( $_POST['action'] ) && $_POST['action'] == 'editpost' ){
-                $old_link_text = get_post_meta( $post_id, 'resource_grid_link_text', true );
+            if (isset($_POST['action']) && $_POST['action'] == 'editpost') {
+                $old_link_text = get_post_meta($post_id, 'resource_grid_link_text', true);
                 $new_link_text = $_POST['resource_grid_link_text'];
-                $old_link_url = get_post_meta( $post_id, 'resource_grid_link_url', true );
+                $old_link_url = get_post_meta($post_id, 'resource_grid_link_url', true);
                 $new_link_url = $_POST['resource_grid_link_url'];
 
-                if( empty( $new_link_text )){
-                    update_post_meta( $post_id, 'resource_grid_link_text', esc_html__( 'Add some text', 'mv-slider' ) );
-                }else{
-                    update_post_meta( $post_id, 'resource_grid_link_text', sanitize_text_field( $new_link_text ), $old_link_text );
+                if (empty($new_link_text)) {
+                    update_post_meta($post_id, 'resource_grid_link_text', esc_html__('Add some text', 'mv-slider'));
+                } else {
+                    update_post_meta($post_id, 'resource_grid_link_text', sanitize_text_field($new_link_text), $old_link_text);
                 }
 
-                if( empty( $new_link_url )){
-                    update_post_meta( $post_id, 'resource_grid_link_url', '#' );
-                }else{
-                    update_post_meta( $post_id, 'resource_grid_link_url', sanitize_text_field( $new_link_url ), $old_link_url );
+                if (empty($new_link_url)) {
+                    update_post_meta($post_id, 'resource_grid_link_url', '#');
+                } else {
+                    update_post_meta($post_id, 'resource_grid_link_url', sanitize_text_field($new_link_url), $old_link_url);
                 }
-                
-                
             }
-        
         }
     }
 }
