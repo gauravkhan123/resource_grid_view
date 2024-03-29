@@ -41,7 +41,7 @@ if (!class_exists('resource_grid_Settings')) {
 
             add_settings_field(
                 'resource_grid_style',
-                esc_html__('Slider Style', 'resources-grid-view'),
+                esc_html__('Grid Style', 'resources-grid-view'),
                 array($this, 'resource_grid_style_callback'),
                 'resource_grid_page2',
                 'resource_grid_second_section',
@@ -59,7 +59,7 @@ if (!class_exists('resource_grid_Settings')) {
         public function resource_grid_shortcode_callback()
         {
 ?>
-            <span><?php esc_html_e('Use the shortcode [resource_grid] to display the slider in any page/post/widget', 'resources-grid-view'); ?></span>
+            <span><?php esc_html_e('Use the shortcode [resource_grid] to display the Grid in any page/post/widget', 'resources-grid-view'); ?></span>
         <?php
         }
 

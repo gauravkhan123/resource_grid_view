@@ -24,15 +24,15 @@ if (!class_exists('WP_Resources_Grid')) {
         function __construct()
         {
             $this->define_constants();
-            add_action( 'admin_menu', array( $this, 'add_menu' ) );
+            add_action('admin_menu', array($this, 'add_menu'));
             require_once(WP_RESOURCES_PATH . 'post-types/class.wp-resources-cpt.php');
             $WP_Resources_Post_Type = new WP_Resources_Post_Type();
-            require_once( WP_RESOURCES_PATH . 'class.setting-page.php' );
+            require_once(WP_RESOURCES_PATH . 'class.setting-page.php');
             $resource_grid_Settings = new resource_grid_Settings();
             require_once(WP_RESOURCES_PATH . 'shortcodes/class.wp-resources-shortcode.php');
             $resource_grid_Settings = new resource_grid_Settings();
-            add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ), 999 );
-            add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts') );
+            add_action('wp_enqueue_scripts', array($this, 'register_scripts'), 999);
+            add_action('admin_enqueue_scripts', array($this, 'register_admin_scripts'));
         }
 
         public function define_constants()
@@ -69,60 +69,43 @@ if (!class_exists('WP_Resources_Grid')) {
                 wp_delete_post($post->ID, true);
             }
         }
-        public function add_menu(){
+        public function add_menu()
+        {
             add_menu_page(
-                esc_html__( 'Resources grid Options', 'resources-grid-view' ),
+                esc_html__('Resources grid Options', 'resources-grid-view'),
                 'Resources grid Options',
                 'manage_options',
                 'rg_admin',
-                array( $this, 'resource_grid_settings_page' ),
+                array($this, 'resource_grid_settings_page'),
                 'dashicons-images-alt2'
             );
-
-            // add_submenu_page(
-            //     'rg_admin',
-            //     esc_html__( 'Manage Slides', 'mv-slider' ),
-            //     esc_html__( 'Manage Slides', 'mv-slider' ),
-            //     'manage_options',
-            //     'edit.php?post_type=mv-slider',
-            //     null,
-            //     null
-            // );
-
-            // add_submenu_page(
-            //     'resource_grid_admin',
-            //     esc_html__( 'Add New Slide', 'mv-slider' ),
-            //     esc_html__( 'Add New Slide', 'mv-slider' ),
-            //     'manage_options',
-            //     'post-new.php?post_type=mv-slider',
-            //     null,
-            //     null
-            // );
-
         }
 
-        public function resource_grid_settings_page(){
-            if( ! current_user_can( 'manage_options' ) ){
+        public function resource_grid_settings_page()
+        {
+            if (!current_user_can('manage_options')) {
                 return;
             }
 
-            if( isset( $_GET['settings-updated'] ) ){
-                add_settings_error( 'resource_grid_options', 'resource_grid_message', esc_html__( 'Settings Saved', 'mv-slider' ), 'success' );
+            if (isset($_GET['settings-updated'])) {
+                add_settings_error('resource_grid_options', 'resource_grid_message', esc_html__('Settings Saved', 'resources-grid-view'), 'success');
             }
-            
-            settings_errors( 'resource_grid_options' );
 
-            require( WP_RESOURCES_PATH . 'views/setting-page.php' );
+            settings_errors('resource_grid_options');
+
+            require(WP_RESOURCES_PATH . 'views/setting-page.php');
         }
-        public function register_scripts(){
-            wp_register_script( 'wp-resources-js', WP_RESOURCES_URL . 'assets/css/bootstrap.min.js', array( 'jquery' ), WP_RESOURCES_VERSION, true );
-            wp_register_style( 'wp-resources-css', WP_RESOURCES_URL . 'assets/css/bootstrap.min.css', array(), WP_RESOURCES_VERSION, 'all' );
+        public function register_scripts()
+        {
+            wp_register_script('wp-resources-js', WP_RESOURCES_URL . 'assets/css/bootstrap.min.js', array('jquery'), WP_RESOURCES_VERSION, true);
+            wp_register_style('wp-resources-css', WP_RESOURCES_URL . 'assets/css/bootstrap.min.css', array(), WP_RESOURCES_VERSION, 'all');
         }
-        
-        public function register_admin_scripts(){
+
+        public function register_admin_scripts()
+        {
             global $typenow;
-            if( $typenow == 'wp_resources'){
-                wp_enqueue_style( 'wp-resources-admin', WP_RESOURCES_URL . 'assets/css/admin.css' );
+            if ($typenow == 'wp_resources') {
+                wp_enqueue_style('wp-resources-admin', WP_RESOURCES_URL . 'assets/css/admin.css');
             }
         }
     }
@@ -135,4 +118,3 @@ if (class_exists('WP_Resources_Grid')) {
 
     $WP_Resources_Grid = new WP_Resources_Grid();
 }
-

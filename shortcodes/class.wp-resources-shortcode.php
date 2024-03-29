@@ -27,9 +27,8 @@ if( ! class_exists('resource_grid_shortcode')){
             require( WP_RESOURCES_PATH . 'views/wp_resources_shortcode.php' );
            wp_enqueue_script( 'wp-resources-js' );
            wp_enqueue_style( 'wp-resources-css' );
-           // wp_enqueue_style( 'mv-slider-style-css' );
-           // resource_grid_options();
-            return ob_get_clean();
+           //resource_grid_options();
+           return ob_get_clean();
         }
     }
 }
